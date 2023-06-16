@@ -18,9 +18,10 @@ class UserSeeder extends Seeder
             'email' => 'abc@xyz.com',
             'password' => '123',
             'first_name' => 'John',
+            'middle_name' => 'Aster',
             'last_name' => 'Smith',
             'is_active' => '0',
-            'is_operator' => '1',
+            'type' => '0',
             'created_at' => '2010-01-03 04:30:43',
             'updated_at' => '2010-01-03 04:30:43',
         ]);
@@ -29,9 +30,10 @@ class UserSeeder extends Seeder
             'email' => 'def@xyz.com',
             'password' => '123',
             'first_name' => 'Jane',
+            'middle_name' => 'Foster',
             'last_name' => 'Williams',
             'is_active' => '0',
-            'is_operator' => '0',
+            'type' => '1',
             'created_at' => '2010-01-03 04:30:43',
             'updated_at' => '2010-01-03 04:30:43',
         ]);

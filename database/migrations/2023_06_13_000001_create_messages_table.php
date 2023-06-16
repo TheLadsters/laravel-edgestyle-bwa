@@ -16,10 +16,10 @@ class CreateMessagesTable extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->string('guid')->unique();
+            $table->integer('message_type');
             $table->integer('conversation_id');
             $table->integer('sender_id');
-            $table->integer('message_type');
-            $table->longText('message');
+            $table->longText('message')->nullable();
             $table->longText('translated_message')->nullable();
             $table->dateTime('created_at');
             $table->dateTime('deleted_at')->nullable();

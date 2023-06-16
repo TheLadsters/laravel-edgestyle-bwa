@@ -16,9 +16,8 @@ class CreateDeletedMessagesTable extends Migration
         Schema::create('deleted_messages', function (Blueprint $table) {
             $table->id();
             $table->integer('messages_id');
-            $table->integer('users_id');
+            $table->integer('users_id'); 
             $table->dateTime('created_at');
-            $table->dateTime('updated_at');
         });
     }
 

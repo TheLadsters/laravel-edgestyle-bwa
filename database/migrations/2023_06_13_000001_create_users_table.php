@@ -20,8 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('middle_name');
+            $table->integer('type');
             $table->boolean('is_active');
-            $table->boolean('is_operator');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

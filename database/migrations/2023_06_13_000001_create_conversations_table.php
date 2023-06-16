@@ -19,7 +19,7 @@ class CreateConversationsTable extends Migration
             $table->integer('creator_id');
             $table->integer('channel_id');
             $table->dateTime('created_at');
-            $table->dateTime('updated_at');
+            $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();
         });
     }

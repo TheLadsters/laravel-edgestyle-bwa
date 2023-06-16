@@ -40,20 +40,22 @@ class User extends Model
     public $timestamps = FALSE;
     protected $fillable = [
         'first_name',
+        'middle_name',
         'last_name',
         'email',
         'password',
+        'is_active',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
-        'is_active',
-        'is_operator',
+        'type', // 0 - Operator, 1 - Customer, 2 - Admin(?)
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
+        'updated_at' => 'datetime',
         'password' => 'hashed',
     ];
     // Get the entries for a specific mood.

@@ -6,31 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
-class Message extends Model
+class Participants extends Model
 {
     use HasFactory;
 
     public $timestamps = FALSE;
     protected $fillable = [
-        'message',
-        'translated_message', 
-        'sender_id',
-        'conversation_id', // Conversation this message is a part of
+        'conversation_id', // Conversation Linked to this entry
+        'users_id', // Users in the conversation specified in conversation_id
     ];
-
     protected $hidden = [
-        'guid', // Universal ID for each message
-        'message_type', // 0 - Text, 1 - Attachment
+        'type' // Type of participant the user_id is in the conversation
+        // 0 - Editor, 1 - Viewer (Cannot Send Message)
     ];
-
     protected $casts = [
         'created_at' => 'datetime',
-        'deleted_at' => 'datetime',
+        'deleted_at' => 'datetime', // Participant is removed from conversation
     ];
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     // Clear entries cache upon modifying an entry
     protected static function boot()
@@ -38,7 +30,7 @@ class Message extends Model
         parent::boot();
 
         static::saving(function() {
-            Cache::forget('messages');
+            Cache::forget('participants');
         });
     }
 }

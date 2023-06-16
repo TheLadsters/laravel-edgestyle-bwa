@@ -20,6 +20,7 @@ class MessageFactory extends Factory
             'sender_id' => User::inRandomOrder()->value('id'),
             'message_type' => $this->faker->numberBetween(0,2),
             'message' => $this->faker->text($maxNbChars = 255),
+            'translated_message' => null,
             'created_at' => $this->faker->dateTime(),
             'deleted_at' => null,
         ];
