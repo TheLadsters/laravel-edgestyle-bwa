@@ -2,16 +2,15 @@
 import * as React from 'react';
 import { Outlet } from "react-router-dom";
 import { styled, useTheme } from '@mui/material/styles';
-import ChatSpace from '../views/ChatSpace'
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import Avatar from '@mui/material/Avatar';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
@@ -47,7 +46,9 @@ const closedMixin = (theme) => ({
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
+    marginTop: '10px',
+    marginBottom: '10px',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
@@ -87,25 +88,46 @@ return (
     <Box sx={{ display: 'flex'}}>
         <CssBaseline />
         <Drawer variant="permanent" open={open}>
-            <DrawerHeader sx={{ display: 'flex', justifyContent: 'space-between'}}>
+            <DrawerHeader>
 
-                <Avatar
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={handleDrawerOpen}
-                    edge="start"
-                    sx={{marginRight: '5px', cursor: 'pointer',
-                    }}
-                >
-                    JS
-                </Avatar>
+                <Grid container justifyContent={'space-between'}>
+                    <Grid item xs={3}>
+                        <Avatar
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            edge="start"
+                            sx={{cursor: 'pointer',
+                            }}
+                        >
+                            JS
+                        </Avatar>
+                    </Grid>
+                    
+                    {open && <Grid container direction={'column'} xs={7}>
+                        <Grid item>
+                            <Typography variant="h5">
+                                <b>John Smith</b>
+                            </Typography>
+                        </Grid>
 
-                {/* John Smith */}
-                
+                        <Grid item>
+                            ID#12345
+                        </Grid>
 
-                {open && <IconButton onClick={handleDrawerClose} >
-                    {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                </IconButton>}
+                        <Grid item>
+                            johnsmith@center.com
+                        </Grid>
+                    </Grid>}
+                                        
+                    <Grid item xs={2}>
+                        {open && <IconButton onClick={handleDrawerClose} >
+                            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                        </IconButton>}
+                    </Grid>
+
+                </Grid>
+
 
             </DrawerHeader>
             <Divider />

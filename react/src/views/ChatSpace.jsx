@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import ChatspaceSidebar from '../layouts/ChatSidebarLayout';
 import ChatspaceChat from '../components/ChatspaceChat';
 import SearchBar from '../components/SearchBar';
 import ContactList from '../components/ContactList';
