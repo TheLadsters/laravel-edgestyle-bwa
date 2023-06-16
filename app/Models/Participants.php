@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Cache;
 
 class Participants extends Model
 {
-    use HasFactory;
-
     public $timestamps = FALSE;
     protected $fillable = [
         'conversation_id', // Conversation Linked to this entry

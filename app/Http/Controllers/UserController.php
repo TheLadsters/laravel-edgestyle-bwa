@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class UserController extends Controller
 {
@@ -12,22 +13,24 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function retrieveAll()
     {
+        /*$usersCacheKey = 'all_users';
+
+        // Check if the data is already cached
+        if (Cache::has($usersCacheKey)) {
+            return Cache::get($usersCacheKey);
+        }
+        */
+
+        // Retrieve the data from the database
         $users = User::all();
 
-        return view('users.index')
-            ->with('users', $users);
-    }
+        /*// Store the data in the cache
+        Cache::put($usersCacheKey, $users, 60); // Cache for 60 minutes
+        */
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('users.create');
+        return $users;
     }
 
     /**
@@ -38,38 +41,38 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-      $this->validate($request, [
-        'name' => 'required|string',
-        'color' => 'required|string',
-      ]);
+        $type = $request->input('type', 0);
+        if($type != 0)
+            $type = $type === 'on' ? 0 : 1; 
 
-      User::create($request->all());
 
-      return redirect()->route('messages.mood')
-        ->with('success', 'User created.');
-    }
+        $this->validate($request, [
+            'email' => 'required|string',
+            'password' => 'required|string',
+            'first_name' => 'required|string',
+            'middle_name' => 'nullable|string',
+            'last_name' => 'required|string',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        return view('users.show')
-            ->with('user', $user);
-    }
+        $user = new User(
+            $request->only([
+                'email',
+                'password',
+                'first_name',
+                'middle_name',
+                'last_name',
+            ]) + 
+            [
+                'type' => (int)$type, // Set a default value for is_active field
+                'is_active' => false, // Set a default value for is_active field
+                'created_at' => date('Y-m-d H:i:s'), // Set the current datetime for created_at field
+                'updated_at' => date('Y-m-d H:i:s'), // Set the current datetime for updated_at field
+            ]
+        );
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-      return view('users.edit')->with('user', $user);
+        $user->save();
+
+        return redirect('/')->with("Successfully Created New User");
     }
 
     /**
@@ -82,15 +85,21 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $this->validate($request, [
-            'name' => 'required|string',
-            'color' => 'required|string',
+            'email' => 'required|string',
+            'password' => 'required|string',
+            'first_name' => 'required|string',
+            'middle_name' => 'string',
+            'last_name' => 'required|string',
+            'is_active' => 'boolean',
+            'type' => 'integer',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
         ]);
 
         $updatedUser = $request->all();
         $user->update($updatedUser);
 
-        return redirect()->route('users.show', [$user->id])
-            ->with('success', 'User updated.');
+      return response("Successfully Updated User");
     }
 
     /**
@@ -103,7 +112,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('users.index')
-            ->with('success', 'User deleted.');
+        return response("Successfully Deleted User");
     }
 }

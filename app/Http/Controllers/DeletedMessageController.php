@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use App\Models\DeletedMessage;
-use App\Models\User;
-use GuzzleHttp\RequestOptions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
-class MessageController extends Controller
+class DeletedMessageController extends Controller
 {
     /**
      * Display all entries
@@ -18,20 +16,20 @@ class MessageController extends Controller
      */
     public function retrieveAll()
     {
-        /*$messagesCacheKey = 'all_messages';
+        $deletedMessagesCacheKey = 'all_deleted_messages';
 
         // Check if the data is already cached
-        if (Cache::has($messagesCacheKey)) {
-            return Cache::get($messagesCacheKey);
-        }*/
+        if (Cache::has($deletedMessagesCacheKey)) {
+            return Cache::get($deletedMessagesCacheKey);
+        }
 
         // Retrieve the data from the database
-        $messages = Message::orderBy('id', 'ASC')->get();
+        $deletedMessages = DeletedMessage::orderBy('id', 'ASC')->get();
 
         // Store the data in the cache
-        //Cache::put($messagesCacheKey, $messages, 60); // Cache for 60 minutes
+        Cache::put($deletedMessagesCacheKey, $deletedMessages, 60); // Cache for 60 minutes
 
-        return $messages;
+        return $deletedMessages;
     }
 
     /**

@@ -37,7 +37,7 @@ use Illuminate\Support\Facades\Cache;
 
 class User extends Model
 {
-    public $timestamps = FALSE;
+ 
     protected $fillable = [
         'first_name',
         'middle_name',
@@ -45,6 +45,9 @@ class User extends Model
         'email',
         'password',
         'is_active',
+        'type',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     protected $hidden = [
