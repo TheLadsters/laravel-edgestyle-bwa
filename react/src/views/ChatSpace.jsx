@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import ChatspaceSidebar from '../components/ChatspaceSidebar';
 import ChatspaceChat from '../components/ChatspaceChat';
 import SearchBar from '../components/SearchBar';
 import ContactList from '../components/ContactList';
@@ -9,25 +8,14 @@ function ChatSpace() {
   return (
     <>
         <Grid container spacing={2}>
-            <Grid item={true} xs={3}>
-                    <ChatspaceSidebar />    
-            </Grid>
             
-            {/* <Grid container xs={3} 
-                direction="column"
-                justifyContent="center"
-                alignItems="center"
-            >
-                <Grid item={true} xs={3}>
-                    <SearchBar />
-                </Grid>
+            
+            <Grid item xs={4}>
+                <SearchBar />
+                <ContactList />
+            </Grid>
 
-                <Grid item={true} xs={9}>
-                    <ContactList />
-                </Grid>
-            </Grid> */}
-
-            <Grid item={true} xs={6}>
+            <Grid item xs={8}>
                 <ChatspaceChat />
             </Grid>
         </Grid>

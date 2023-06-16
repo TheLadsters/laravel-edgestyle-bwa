@@ -1,44 +1,70 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React from 'react';
+// import InboxIcon from '@mui/icons-material/InboxIcon';
+// import DraftsIcon from '@mui/icons-material/DraftsIcon';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Typography from '@mui/material/Typography';
+import ListItemText from '@mui/material/ListItemText';
 import Card from '@mui/material/Card';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuList';
+import Divider from '@mui/material/Divider';
+import Avatar from '@mui/material/Avatar';
+import ListItemButton from '@mui/material/ListItemButton';
 
-export default function ChatList() {
+
+export default function ContactList() {
+  const cardStyle = {
+    borderRadius: '10px',
+    height: '92vh',
+    padding: '0',
+    overflowY: 'scroll'
+  }
   return (
-    <Card style={{height: '100%'}}>
-        <MenuList>
-            <MenuItem>
-            Contact#12345
-            </MenuItem>
-            <MenuItem>
-            Contact#12345
-            </MenuItem>
-            <MenuItem>
-            Contact#12345
-            </MenuItem>
-            <MenuItem>
-            Contact#12345
-            </MenuItem>
-            <MenuItem>
-            Contact#12345
-            </MenuItem>
-            <MenuItem>
-            Contact#12345
-            </MenuItem>
-            <MenuItem>
-            Contact#12345
-            </MenuItem>
-            <MenuItem>
-            Contact#12345
-            </MenuItem>
-            <MenuItem>
-            Contact#12345
-            </MenuItem>
-            <MenuItem>
-            Contact#12345
-            </MenuItem>
-        </MenuList>
-    </Card>
+      <Card style={cardStyle}>
+          <List key={1}>
+            {
+              // Data will be mapped here for contacts
+              // temporary
+              ['12345', '2492', '2569', 
+              '12345', '2492', '2569', 
+              '25562', '23663', '12345',
+              '596930', '590239', '2492'].map((num, index)=>(
+                <>
+                <ListItemButton key={index}>
+                  <ListItem key={index} alignItems="flex-start">
+                    <ListItemAvatar key={index}>
+                      <Avatar alt="Remy Sharp" />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={
+                        <Typography sx={{fontWeight: 'bold'}}
+                            variant="h5"
+                        >
+                            {`Contact#${num}`}
+                          </Typography>
+                      }
+                      secondary={
+                        <React.Fragment>
+                          <Typography
+                            sx={{ display: 'inline' }}
+                            component="span"
+                            variant="body2"
+                            color="text.primary"
+                          >
+                            Ali Connors
+                          </Typography>
+                          {" — I'll be in your neighborhood doing errands this…"}
+                        </React.Fragment>
+                      }
+                    />
+                  </ListItem>
+                  <Divider />
+                </ListItemButton>
+                </>
+              ))
+            }
+            </List>
+      </Card>
   )
 }
