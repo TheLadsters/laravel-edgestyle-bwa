@@ -13,29 +13,37 @@ import Avatar from '@mui/material/Avatar';
 import ListItemButton from '@mui/material/ListItemButton';
 
 
-export default function ChatList() {
+export default function ContactList() {
   const cardStyle = {
     borderRadius: '10px',
     height: '92vh',
-    padding: '0'
+    padding: '0',
+    overflowY: 'scroll'
   }
   return (
       <Card style={cardStyle}>
-          <List>
+          <List key={1}>
             {
               // Data will be mapped here for contacts
               // temporary
               ['12345', '2492', '2569', 
+              '12345', '2492', '2569', 
               '25562', '23663', '12345',
               '596930', '590239', '2492'].map((num, index)=>(
                 <>
-                <ListItemButton>
-                  <ListItem alignItems="flex-start">
-                    <ListItemAvatar>
-                      <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <ListItemButton key={index}>
+                  <ListItem key={index} alignItems="flex-start">
+                    <ListItemAvatar key={index}>
+                      <Avatar alt="Remy Sharp" />
                     </ListItemAvatar>
                     <ListItemText
-                      primary="Brunch this weekend?"
+                      primary={
+                        <Typography sx={{fontWeight: 'bold'}}
+                            variant="h5"
+                        >
+                            {`Contact#${num}`}
+                          </Typography>
+                      }
                       secondary={
                         <React.Fragment>
                           <Typography
