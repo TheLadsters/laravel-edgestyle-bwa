@@ -20,3 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/add_user',  [UserController::class, 'store']);
+Route::get('/get_users',  [UserController::class, 'retrieveAll']);
+Route::get('/get_messages',  [MessageController::class, 'retrieveAll']);
