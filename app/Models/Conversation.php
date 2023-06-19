@@ -12,7 +12,10 @@ class Conversation extends Model
     protected $fillable = [
         'title', // Conversation Title
         'creator_id', // Who created the conversation
-        'channel_id' // For grouping different conversations in Conversations List
+        'channel_id', // For grouping different conversations in Conversations List
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $casts = [

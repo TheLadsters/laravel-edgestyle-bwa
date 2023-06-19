@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
   public function run()
   {
     $this->call(UserSeeder::class);
+    $this->call(ConversationSeeder::class);
 
     // create an array of random unique dates in the format y-m-d
     $randomDates = [];

@@ -20,6 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Users Table Endpoints
 Route::post('/add_user',  [UserController::class, 'store']);
 Route::get('/get_users',  [UserController::class, 'retrieveAll']);
+
+// Messages Table Endpoints
+Route::post('/add_message',  [MessageController::class, 'store']);
 Route::get('/get_messages',  [MessageController::class, 'retrieveAll']);

@@ -13,6 +13,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     let userTypeCheckbox = document.getElementById('usertype')
     let addUserForm = document.getElementById('add_user')
+    let addMessageForm = document.getElementById('add_message')
 
     if(userTypeCheckbox)
         userTypeCheckbox.addEventListener('click', (e)=> {
@@ -35,7 +36,31 @@ window.addEventListener('DOMContentLoaded', () => {
             dataType:"json",
             success: function (response) {
                 // Handle the response data
-                window.location.reload()
+                console.log(response);
+            },
+            error: function (error) {
+                // Handle any errors
+                console.error(error);
+            }
+        });
+   });
+
+    // Add an event listener for form submission
+    addMessageForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+
+        // Serialize form data
+        let formData = new FormData($(this)[0]);
+
+        $.ajax({
+            url: 'api/add_message',
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType:"json",
+            success: function (response) {
+                // Handle the response data
                 console.log(response);
             },
             error: function (error) {

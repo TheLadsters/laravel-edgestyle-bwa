@@ -10,21 +10,26 @@ class Message extends Model
 {
     use HasFactory;
 
-    public $timestamps = FALSE;
     protected $fillable = [
+        'message_type',
+        // 0 - Text, 1 - Attachment
         'message',
-        'translated_message', 
+        'translated_message',
         'sender_id',
-        'conversation_id', // Conversation this message is a part of
+        'conversation_id',
+        // Conversation this message is a part of
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $hidden = [
         'guid', // Universal ID for each message
-        'message_type', // 0 - Text, 1 - Attachment
     ];
 
     protected $casts = [
         'created_at' => 'datetime',
+        'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
     public function user()
@@ -37,7 +42,7 @@ class Message extends Model
     {
         parent::boot();
 
-        static::saving(function() {
+        static::saving(function () {
             Cache::forget('messages');
         });
     }
