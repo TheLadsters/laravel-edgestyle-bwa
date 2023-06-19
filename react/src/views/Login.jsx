@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -10,6 +11,8 @@ import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import PersonIcon from '@mui/icons-material/Person';
 
 function Login() {
+const [showPassword, setShowPassword] = useState(false)
+
 const loginStyle = {
     div: {
       display: 'flex',
@@ -23,6 +26,11 @@ const loginStyle = {
     width: '40%'
   }
 }
+
+function handleShowPassword() {
+  setShowPassword(!showPassword)
+}
+
   return (
     <div style={loginStyle.div}>
       <Card sx={loginStyle.card}>
@@ -48,9 +56,9 @@ const loginStyle = {
               size="lg"
               startDecorator={<KeyRoundedIcon />}
               placeholder="Password"
-              type="password"
+              type={!showPassword ? 'text' : 'password'}
               endDecorator={
-                <IconButton color="neutral">
+                <IconButton onClick={handleShowPassword} color="neutral">
                   <VisibilityRoundedIcon />
                 </IconButton>
               }
@@ -58,7 +66,9 @@ const loginStyle = {
           </Grid>
 
           <Grid item>
-            <Button fullWidth={'100%'} variant="contained">Login</Button>
+            <Link to="/chatspace">
+              <Button fullWidth={'100%'} variant="contained">Login</Button>
+            </Link>
           </Grid>
         </Grid>
       </Card>
