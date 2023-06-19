@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use App\Models\DeletedMessage;
-use App\Models\User;
-use GuzzleHttp\RequestOptions;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 
 class MessageController extends Controller
 {
@@ -42,23 +42,52 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
+        $currentDate = date('Y-m-d H:i:s');
+        $senderId = $request->input('sender_id', 0);
+        $conversationId = $request->input('conversation_id', 0);
+        $messageType = $request->input('message_type', 0);
 
-        // Date must be in format Y-M-D. Must also not already exist in entries table date column
-        // Selected mood_id must exist in the moods table under column id
-        $request->validate([
-            'sender_id' => 'required|exists:users,id',
-            'message' => 'longText',
-            'conversation_id' => 'integer',
-            'guid' => 'string',
-            'message_type' => 'integer',
-            'created_at' => 'datetime',
-            'deleted_at' => 'datetime|nullable',
-        ]);
+        if ($messageType != 0)
+            $messageType = $messageType === 'on' ? 1 : 0;
 
-        Message::create($request->all());
+        if ($messageType === 0)
+            $this->validate($request, [
+                'message' => 'max:1000',
+            ]);
+        else
+            $this->validate($request, [
+                'message' => 'max:1000|nullable',
+            ]);
 
-        return response("Successfully Store New Message");
+        $message = new Message(
+            $request->only([
+                'message',
+                'conversation_id',
+            ]) +
+            [
+                'sender_id' => (int) $senderId,
+                'conversation_id' => (int) $conversationId,
+                'message_type' => (int) $messageType,
+                'created_at' => $currentDate,
+                // Set the current datetime for created_at field
+                'updated_at' => $currentDate,
+                // Set the current datetime for created_at field
+                'deleted_at' => null, // Set the current datetime for deleted_at field
+            ]
+        );
 
+        // For attributes in $hidden array
+        $message->setAttribute('guid', Str::orderedUuid());
+
+        $message->save();
+
+        // Create a new Response instance and set the JSON content
+        $response = new Response();
+        $response->setContent(json_encode(['message' => 'Successfully Store New Message']));
+        $response->setStatusCode(200);
+        $response->header('Content-Type', 'application/json');
+
+        return $response;
     }
 
     /**

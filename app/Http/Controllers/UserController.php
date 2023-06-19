@@ -42,8 +42,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $type = $request->input('type', 0);
-        if($type != 0)
-            $type = $type === 'on' ? 0 : 1; 
+        if ($type != 0)
+            $type = $type === 'on' ? 0 : 1;
 
 
         $this->validate($request, [
@@ -61,18 +61,26 @@ class UserController extends Controller
                 'first_name',
                 'middle_name',
                 'last_name',
-            ]) + 
+            ]) +
             [
-                'type' => (int)$type, // Set a default value for is_active field
-                'is_active' => false, // Set a default value for is_active field
-                'created_at' => date('Y-m-d H:i:s'), // Set the current datetime for created_at field
+                'type' => (int) $type,
+                // Set a default value for is_active field
+                'is_active' => false,
+                // Set a default value for is_active field
+                'created_at' => date('Y-m-d H:i:s'),
+                // Set the current datetime for created_at field
                 'updated_at' => date('Y-m-d H:i:s'), // Set the current datetime for updated_at field
             ]
         );
 
         $user->save();
+        // Create a new Response instance and set the JSON content
+        $response = new Response();
+        $response->setContent(json_encode(['message' => 'Successfully Store New Message']));
+        $response->setStatusCode(200);
+        $response->header('Content-Type', 'application/json');
 
-        return redirect('/')->with("Successfully Created New User");
+        return $response;
     }
 
     /**
@@ -99,7 +107,7 @@ class UserController extends Controller
         $updatedUser = $request->all();
         $user->update($updatedUser);
 
-      return response("Successfully Updated User");
+        return response("Successfully Updated User");
     }
 
     /**

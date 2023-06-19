@@ -22,6 +22,7 @@ class CreateMessagesTable extends Migration
             $table->longText('message')->nullable();
             $table->longText('translated_message')->nullable();
             $table->dateTime('created_at');
+            $table->dateTime('updated_at');
             $table->dateTime('deleted_at')->nullable();
         });
     }

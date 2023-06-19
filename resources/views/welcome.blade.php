@@ -13,19 +13,51 @@
     <div class="container">
         <h1>Query Response</h1>
         <div class="container">
-            <form id="add_user">
-                @csrf
-                <input type="email" class="form-control" name="email" placeholder="Email" required />
-                <input type="password" name="password" class="form-control" placeholder="Password" required />
-                <input type="text" class="form-control" name="first_name" placeholder="First Name" required />
-                <input type="text" class="form-control" name="middle_name" placeholder="Middle Name" />
-                <input type="text" class="form-control" name="last_name" placeholder="Last Name" required />
-                <input class="form-check-input" type="checkbox" name="type">
-                <label class="form-check-label" for="type">
-                    Is Operator?
-                </label>
-                <button type="submit">Add New User</button>
-            </form>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <form id="add_user">
+                            @csrf
+                            <td> <input type="email" class="form-control" name="email" placeholder="Email"
+                                    required /> </td>
+                            <td> <input type="password" name="password" class="form-control" placeholder="Password"
+                                    required /> </td>
+                            <td><input type="text" class="form-control" name="first_name" placeholder="First Name"
+                                    required /></td>
+                            <td><input type="text" class="form-control" name="middle_name"
+                                    placeholder="Middle Name" /></td>
+                            <td><input type="text" class="form-control" name="last_name" placeholder="Last Name"
+                                    required /></td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" name="type">
+                                <label class="form-check-label" for="type">
+                                    Is Operator?
+                                </label>
+                            </td>
+                            <td><button type="submit">Add New User</button></td>
+                        </form>
+                    </tr>
+                    <tr>
+                        <form id="add_message">
+                            @csrf
+                            <td>
+                                <textarea class="form-control" name="message" rows="3" placeholder="Enter a message..."></textarea>
+                            </td>
+                            <td> <input type="number" name="conversation_id" class="form-control"
+                                    placeholder="Conversation ID" required /> </td>
+                            <td><input type="number" class="form-control" name="sender_id" placeholder="Sender ID"
+                                    required /></td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" name="message_type">
+                                <label class="form-check-label" for="message_type">
+                                    Is Attachment?
+                                </label>
+                            </td>
+                            <td><button type="submit">Add New Message</button></td>
+                        </form>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="container">
@@ -107,6 +139,7 @@
                             <th>Users ID</th>
                             <th>Type</th>
                             <th>Created At</th>
+                            <th>Updated At</th>
                             <th>Deleted At</th>
                         </tr>
                     </thead>
@@ -118,6 +151,7 @@
                                 <td>{{ $row['users_id'] }}</td>
                                 <td>{{ $row['type'] }}</td>
                                 <td>{{ $row['created_at'] }}</td>
+                                <td>{{ $row['updated_at'] }}</td>
                                 <td>{{ $row['deleted_at'] }}</td>
                             </tr>
                         @endforeach
@@ -137,6 +171,7 @@
                             <th>Message</th>
                             <th>Translated Message</th>
                             <th>Created At</th>
+                            <th>Updated At</th>
                             <th>Deleted At</th>
                         </tr>
                     </thead>
@@ -152,6 +187,7 @@
                                 <td>{{ $row['translated_message'] }}</td>
                                 <td>{{ $row['created_at'] }}</td>
                                 <td>{{ $row['updated_at'] }}</td>
+                                <td>{{ $row['deleted_at'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>
