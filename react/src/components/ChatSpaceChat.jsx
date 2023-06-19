@@ -23,7 +23,7 @@ export default function ChatSpaceChat() {
     }
 
     const sendAndInfoStyle = {
-        borderRadius: '20px', padding: '10px 10px'
+        borderRadius: '20px', padding: '10px 15px'
     }
 
     const escalateStyle = {

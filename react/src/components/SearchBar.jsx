@@ -1,22 +1,32 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import TextField from '@mui/material/TextField';
-import { alpha, styled } from '@mui/material/styles';
-import FormControl from '@mui/material/FormControl';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import SearchIcon from '@mui/icons-material/Search';
+import IconButton from '@mui/joy/IconButton';
+import Input from '@mui/joy/Input';
 
 export default function SearchBar() {
-    const style = {
-      width: '100%',
-      marginBottom: '20px', 
-      marginTop: '20px',
-      borderRadius: '20px'
+    const styles = {
+        searchBar: {
+          borderRadius: '20px',
+          marginBottom: '20px', 
+          marginTop: '20px',
+        }
     }
+
+
+
   return (
-    <TextField sx={style}
-          id="filled-search"
-          label="Search..."
-          type="search"
-          variant="filled"
-        />
+    <Input sx={styles.searchBar}
+      size="lg"
+      placeholder="Search..."
+      type="text"
+      endDecorator={
+        <IconButton color="white">
+          <SearchIcon color="action" />
+        </IconButton>
+      }
+  />
+
   )
 }
