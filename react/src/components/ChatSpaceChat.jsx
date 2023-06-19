@@ -1,18 +1,31 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
-import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import ForumIcon from '@mui/icons-material/Forum';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import InfoIcon from '@mui/icons-material/Info';
-import SendIcon from '@mui/icons-material/Send';
-import ErrorIcon from '@mui/icons-material/Error';
-import AttachmentIcon from '@mui/icons-material/Attachment';
-import TextField from '@mui/material/TextField';
+import React, { useState } from 'react'
+import {Grid, Card, Button, Typography, TextField, Divider, Box} from '@mui/material';
+import {Forum, Info, Send, Error, Attachment} from '@mui/icons-material';
+import EscalatePopup from './Modals/EscalatePopup';
+import CustomerInfoPopup from './Modals/CustomerInfoPopup';
 
 
 export default function ChatSpaceChat() {
+    const [openEscalate, setOpenEscalate] = React.useState(false);
+    const [openInfo, setOpenInfo] = React.useState(false);
+
+    function openEscalateModal(){
+        setOpenEscalate(true)
+    }
+
+    function closeEscalateModal(){
+        setOpenEscalate(false)
+    }
+
+    function openInfoModal(){
+        setOpenInfo(true)
+    }
+
+    function closeInfoModal(){
+        setOpenInfo(false)
+    }
+
     const cardStyle = {
         borderRadius: '10px', marginTop: '20px', 
         height: '98vh', marginRight: '10px',
@@ -47,9 +60,12 @@ export default function ChatSpaceChat() {
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Button variant="contained" style={sendAndInfoStyle}>
+                        <Button variant="contained" 
+                        style={sendAndInfoStyle}
+                        onClick={openInfoModal}
+                        >
                             Customer Information
-                            <InfoIcon style={{marginLeft: '5px'}} />
+                            <Info style={{marginLeft: '5px'}} />
                         </Button>
                     </Grid>
                 </Grid>
@@ -68,33 +84,36 @@ export default function ChatSpaceChat() {
 
                     <Grid container justifyContent={'space-between'}>
                         <Grid item>
-                            <Button variant="contained" style={escalateStyle}>
-                                <ErrorIcon style={{marginRight: '5px'}} />
+                            <Button variant="contained" style={escalateStyle}
+                                onClick={openEscalateModal}
+                            >
+                                <Error style={{marginRight: '5px'}} />
                                 Escalate
                             </Button>
                         </Grid>
 
                         <Grid item>
                             <Button variant="contained" style={templateStyle}>
-                                <ForumIcon style={{marginRight: '5px'}} />
+                                <Forum style={{marginRight: '5px'}} />
                                 Template
                             </Button>
 
                             <Button>
-                                <AttachmentIcon xs={5} />
+                                <Attachment xs={5} />
                             </Button>
 
                             <Button variant="contained" style={sendAndInfoStyle}>
                                 Send
-                                <SendIcon style={{marginLeft: '5px'}} />
+                                <Send style={{marginLeft: '5px'}} />
                             </Button>
                         </Grid>
                     </Grid>
                 </Grid>
-                 
-                   
     </Card>
- 
+
+    <EscalatePopup open={openEscalate} handleClose={closeEscalateModal} />
+    <CustomerInfoPopup open={openInfo} handleClose={closeInfoModal} />
+
     </>
   )
 }
