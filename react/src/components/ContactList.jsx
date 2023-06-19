@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-// import InboxIcon from '@mui/icons-material/InboxIcon';
-// import DraftsIcon from '@mui/icons-material/DraftsIcon';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -18,7 +16,9 @@ export default function ContactList() {
     borderRadius: '10px',
     height: '92vh',
     padding: '0',
-    overflowY: 'scroll'
+    overflowY: 'scroll',
+    marginBottom: '10px',
+    width: '100%'
   }
   return (
       <Card style={cardStyle}>
