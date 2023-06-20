@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -81,6 +82,17 @@ class UserController extends Controller
         $response->header('Content-Type', 'application/json');
 
         return $response;
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param \App\Models\User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $user)
+    {
+        return new UserResource($user);
     }
 
     /**

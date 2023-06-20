@@ -1,18 +1,51 @@
-import {
-    createBrowserRouter, 
-    createRoutesFromElements, 
-    Route
-} from "react-router-dom";
-import ChatSidebarLayout from './layouts/ChatSidebarLayout';
-import ChatSpace from './views/ChatSpace';
-import NotFound from './views/NotFound';
-import Login from './views/Login';
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import ChatSidebarLayout from "./layouts/ChatSidebarLayout";
+import ChatSpace from "./views/ChatSpace";
+import NotFound from "./views/NotFound";
+import Login from "./views/Login";
 import Dashboard from "./views/Dashboard";
 import Settings from "./views/Settings";
 import ProtectedRoute from "./layouts/ProtectedRoute";
 
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <ProtectedRoute />,
+        children: [
+            {
+                path: '/',
+                element: <Navigate to="/dashboard"/>
+            },
+            {
+                element: <ChatSidebarLayout />,
+                children: [
+                    {
+                        path: "/dashboard",
+                        element: <Dashboard />,
+                    },
+                    {
+                        path: "/chatspace",
+                        element: <ChatSpace />,
+                    },
+                    {
+                        path: "/settings",
+                        element: <Settings />,
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        path: "/login",
+        element: <Login />,
+    },
+    {
+        path: "*",
+        element: <NotFound />,
+    },
+]);
 
-const router = createBrowserRouter(createRoutesFromElements(
+/*createBrowserRouter(createRoutesFromElements(
     <>
     <Route element={<ProtectedRoute />}>
         <Route path="/" element={<ChatSidebarLayout />}>
@@ -25,7 +58,6 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="*" element={<NotFound />}></Route>
     <Route path="/login" element={<Login />}></Route>
     </>
-))
-
+    */
 
 export default router;
