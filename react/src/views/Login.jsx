@@ -31,7 +31,7 @@ function Login() {
             .then(({ data }) => {
                 setUser(data.user);
                 setToken(data.token);
-                navigate("/dashboard");
+                navigate("/chatspace");
             })
             .catch((err) => {
                 const response = err.response;

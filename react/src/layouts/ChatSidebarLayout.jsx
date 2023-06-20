@@ -115,9 +115,18 @@ export default function ChatSidebarLayout() {
     };
 
     useEffect(() => {
-        axiosClient.get("/user").then(({ data }) => {
-            setUser(data);
-        });
+        async function fetchUser(){
+            try{
+                await axiosClient.get("/user").then(({ data }) => {
+                    setUser(data);
+                });
+            }
+            catch(err){
+                console.log(err);
+            }
+        }
+
+        fetchUser();
     }, [setUser]);
 
     return (
