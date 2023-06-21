@@ -31,6 +31,18 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/add_message', [MessageController::class, 'store']);
     Route::get('/get_messages', [MessageController::class, 'retrieveAll']);
 
+    // Strapi Translations Template Endpoints
+    Route::get('/get_strapi_translations_templates', function () {
+        $products = DB::connection('mysql_strapi')
+            ->table("translations")
+            ->select(['id', 'english', 'japanese', 'category'])
+            ->where('published_at', '!=', null)
+            ->get();
+
+        return ($products);
+    });
+
+
     Route::apiResource('/users', UserController::class);
 });
 
