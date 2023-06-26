@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewMessageEvent;
 use App\Models\Message;
 use App\Models\DeletedMessage;
 use Illuminate\Http\JsonResponse;
@@ -62,7 +63,6 @@ class MessageController extends Controller
         $message = new Message(
             $request->only([
                 'message',
-                'conversation_id',
             ]) +
             [
                 'sender_id' => (int) $senderId,
@@ -86,6 +86,8 @@ class MessageController extends Controller
         $response->setContent(json_encode(['message' => 'Successfully Store New Message']));
         $response->setStatusCode(200);
         $response->header('Content-Type', 'application/json');
+
+        event(new NewMessageEvent("/get_messages"));
 
         return $response;
     }
