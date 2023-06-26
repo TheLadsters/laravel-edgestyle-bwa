@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\ConsoleLogEvent;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Http\Request;
@@ -48,3 +49,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::post('/consoleLog', function (Request $request) {
+    event(new ConsoleLogEvent('This is a new message'));
+
+    // Return the response
+    return response()->json(['message' => 'POST request handled']);
+});
