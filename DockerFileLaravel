@@ -1,0 +1,36 @@
+FROM php:8.1-fpm-alpine
+
+ENV DB_CONNECTION=mysql
+ENV DB_HOST=ec2-13-238-143-76.ap-southeast-2.compute.amazonaws.com
+ENV DB_PORT=8053
+ENV DB_DATABASE=mock_translation_laravel
+ENV DB_USERNAME=root
+ENV DB_PASSWORD=""
+ENV APP_DEBUG=true
+ENV VITE_API_BASE_URL=http://localhost:8000
+ENV BROADCAST_DRIVER="pusher"
+ENV VITE_BROADCAST_DRIVER="pusher"
+ENV PUSHER_APP_KEY="react-pusher"
+ENV VITE_PUSHER_APP_KEY="react-pusher"
+ENV PUSHER_APP_ID="react-pusher"
+ENV PUSHER_APP_SECRET="react-pusher"
+ENV PUSHER_APP_CLUSTER="mt1"
+ENV VITE_PUSHER_APP_CLUSTER="mt1"
+ENV VITE_PUSHER_APP_HOST="ec2-13-238-143-76.ap-southeast-2.compute.amazonaws.com"
+ENV PUSHER_PORT=8054
+ENV VITE_PUSHER_PORT=8054
+ENV APP_NAME="react-pusher"
+ENV APP_KEY="base64:PsOcCZlKXo8FIWIwDLPbPDdjlucRrXbisGDGD8vG3EU="
+
+
+RUN docker-php-ext-install pdo pdo_mysql sockets
+RUN curl -sS https://getcomposer.org/installer<200b> | php -- \
+     --install-dir=/usr/local/bin --filename=composer
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /app
+COPY . .
+RUN composer install
+CMD ["php","artisan","migrate:refresh", "--seed","--force"]
+CMD ["php","artisan","serve", "--host=0.0.0.0","--port=8000"]
